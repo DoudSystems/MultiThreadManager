@@ -27,11 +27,11 @@ public abstract class AppThread {
 
     public virtual void StartTimer() {
         Start = GetDateTime();
-        Log($"Task {TaskName} started at {Start} ...");
+        Log($"Task {TaskName} started ...");
     }
     public virtual void FinishTimer() {
         Finish = GetDateTime();
-        Log($"Task {TaskName} finished at {Finish} ...");
+        Log($"Task {TaskName} finished  ...");
         TimeSpan ts = Finish - Start;
         Log($"Task {TaskName} ran in {ts:c} ...");
     }

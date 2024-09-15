@@ -15,8 +15,13 @@ namespace Dsi.MultiThreadManager;
 /// </summary>
 public static class AppThreadManager
 {
+    private static string AppThreadManagerLogFile = "AppThreadManager.log";
+    private static string DateTimeFormat = "yyyy-MMM-dd hh:mm:ss";
+    private static DateTime Start = default!;
+
     public static PriorityQueue<AppThread, int> PriorityAppThreads = new();
-    public static List<Task> Tasks { get; set; } = new List<Task>();
+    public static List<Task> Tasks { get; set; } = new();
+    private static List<string> Messages = new();
 
     public static void Add(AppThread appThread) {
         PriorityAppThreads.Enqueue(appThread, appThread.Priority);
@@ -28,7 +33,7 @@ public static class AppThreadManager
     }
 
     public static void Execute() {
-        DateTime start = DateTime.Now;
+        Start = DateTime.Now;
         var count = PriorityAppThreads.Count;
         for(var idx = 0; idx < count; idx++) {
             var appThread = PriorityAppThreads.Dequeue();
@@ -37,12 +42,27 @@ public static class AppThreadManager
             task.Start();
         }
         Task.WaitAll(Tasks.ToArray());
-        TimeSpan ts = DateTime.Now - start;
+        TimeSpan ts = DateTime.Now - Start;
         Log($"All tasks completed in {ts:c}");
+        WriteLogMessages();
     }
 
     public static void Log(string message) {
-        Console.WriteLine($"AppThreadMgr: {message}");
+        var msg = $"AppThreadMgr: {DateTime.Now.ToString(DateTimeFormat)} {message}";
+        Messages.Add(msg);
+        Console.WriteLine(msg);
+    }
+
+    public static void WriteLogMessages() {
+        var fullpath = $"./{AppThreadManagerLogFile}";
+        List<string> currentLog = new();
+        if(!System.IO.File.Exists(fullpath)) {
+            System.IO.File.WriteAllLines(fullpath, new string[] {});
+        }
+        currentLog.AddRange(System.IO.File.ReadAllLines(fullpath));
+        currentLog.Add($"---{Start.ToString(DateTimeFormat)}---------------------------------------------------");
+        currentLog.AddRange(Messages);
+        System.IO.File.WriteAllLines(fullpath, currentLog.ToArray());
     }
 
 }
