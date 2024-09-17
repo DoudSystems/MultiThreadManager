@@ -20,6 +20,7 @@ public abstract class AppThread {
 
     public string TaskName { get; set; } = default!;
     public int Priority { get; set; } = 5;
+    public object? ReturnResult = null;
     private DateTime Start { get; set; } = default!;
     private DateTime Finish { get; set; } = default!;
 

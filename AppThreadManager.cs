@@ -20,10 +20,12 @@ public static class AppThreadManager
     private static DateTime Start = default!;
 
     public static PriorityQueue<AppThread, int> PriorityAppThreads = new();
+    public static List<AppThread> AppThreads = new();
     public static List<Task> Tasks { get; set; } = new();
     private static List<string> Messages = new();
 
     public static void Add(AppThread appThread) {
+        AppThreads.Add(appThread);
         PriorityAppThreads.Enqueue(appThread, appThread.Priority);
     }
     public static void AddRange(params AppThread[] appThreads) {
