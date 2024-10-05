@@ -34,14 +34,22 @@ public static class AppThreadManager
         }
     }
 
-    public static void Execute() {
+    public static void Execute(bool RunSynchronous = false) {
+        if(RunSynchronous) 
+            Log("Running synchronous ..."); 
+        else 
+            Log("Running asynchronous ...");
         Start = DateTime.Now;
         var count = PriorityAppThreads.Count;
         for(var idx = 0; idx < count; idx++) {
             var appThread = PriorityAppThreads.Dequeue();
             Task task = new Task(() => appThread.ExecAppThreadAsync());
             Tasks.Add(task);
-            task.Start();
+            if(RunSynchronous) {
+                task.RunSynchronously();
+            } else {
+                task.Start();
+            }
         }
         Task.WaitAll(Tasks.ToArray());
         TimeSpan ts = DateTime.Now - Start;

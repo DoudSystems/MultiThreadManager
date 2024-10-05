@@ -6,12 +6,12 @@ namespace MultiThreadManager;
 public class TestThreadLongCounter : AppThread {
 
     public int counter { get; set; } = 10;
-    public int sum { get; set; } = 0;
+    public double sum { get; set; } = 0;
 
     private void LongCounter(long counter) {
-        int total = 0;
+        double total = 0;
         for(int i = 0; i < counter; i++) {
-            total += (i % 2 == 0) ? 2 * i : -3 * i;
+            total += Math.Pow(i, 3) - Math.Pow(i, 2) + i - 7;
         }
         sum = total;
     }
