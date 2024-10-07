@@ -8,6 +8,12 @@ TestThreadSleep t4 = new() { TaskName = "T4", Sleep = 2000};
 TestThreadSleep t5 = new() { TaskName = "T5", Priority = 6, Sleep = 6000 };
 TestThreadSleep t6 = new() { TaskName = "T6", Priority = 8, Sleep = 8000};
 
+AppThreadManager.AddRange( 
+    new TestCalcFactorial() { TaskName = "F1", n = 6 },
+    new TestCalcFactorial() { TaskName = "F2", n = 4 },
+    new TestCalcFactorial() { TaskName = "F3", n = 9 },
+    new TestCalcFactorial() { TaskName = "F4", n = 13 }
+);
 AppThreadManager.AddRange(t1, t2, t3, t4, t5, t6);
 
 AppThreadManager.Execute( /* RunSynchronous: true */ );

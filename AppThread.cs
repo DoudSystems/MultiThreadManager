@@ -13,6 +13,12 @@ namespace Dsi.MultiThreadManager;
 /// The 'TaskName' is an user defined identifier for the task used when
 /// log messages are displayed.
 /// 
+/// The 'Priority' defines the order that applications are started. Lower
+/// number are started before higher numbers.
+/// 
+/// The `ReturnResult` can be used if the method executed needs to return
+/// a value.
+/// 
 /// The 'StartTimer()' and 'FinishTimer()' can be used to measure the 
 /// amount of time the particular task executes.
 /// </summary>
