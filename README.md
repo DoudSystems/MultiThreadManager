@@ -1,10 +1,12 @@
 # MultiThreadManager
 
-MultiThreadManager is designed to make it easy for developers to take advantage of the multi-core cpus and have their methods run asnchronously in the background rather than synchronously in the foreground. This allows taking better advantage of the multi-core CPUs and it allows applications to finish sooner. It can run multiple methods asynchronously to make use of the multi-core CPUs
+MultiThreadManager is designed to make it easy for developers to take advantage of the multi-core cpus and have some or all of their methods run *asnchronously* in the background rather than synchronously in the foreground. This takes better advantage of the multi-core CPUs and it allows applications to finish sooner. 
+
+I created the MultiThreadManager when my son created a program that was designed to validate data sent by other companies so the data could be processed by the sales system. There were about a dozen validations for each row in a text file that could have up to 150,000 rows. All of these validations required checking that a value existed in a database table. Because of the number of possible rows and that there were multiple text files to be processed every day, having each file had to be processed quickly.
 
 ## What methods can run async?
 
-The criteria for having multiple methods running asynchronously, both methods must be independent of each other. If method1 returns a value that must be pass into method2, these two methods cannot be run asynchronously because method2 cannot run until method1 is finished. But if method1 will validate a state code while method2 will validate a value within a range, these two methods can run asynchronously since they are independent of each other.
+The criteria for running multiple methods asynchronously is that all methods must be independent of all others. If method1 returns a value that must be pass into method2, method2 cannot be run asynchronously because it cannot run until method1 is finished. But if method1 will validate a state code while method2 will validate a value within a range, these two methods can run asynchronously since they are independent of each other.
 
 ## AppThread class
 
@@ -59,4 +61,4 @@ AppThreadManager.AddRange(
 AppThreadManager.Execute();
 ```
 
-When the methods have been executed, the completed methods will exist in the `AppThreads` collection.
+When the methods have been executed, the completed methods are available for review in the `AppThreads` collection. This is important for those methods that return values.
