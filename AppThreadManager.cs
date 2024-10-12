@@ -15,6 +15,7 @@ namespace Dsi.MultiThreadManager;
 /// </summary>
 public static class AppThreadManager
 {
+    private static string version = "ver 1.0";
     private static string AppThreadManagerLogFile = "AppThreadManager.log";
     private static string DateTimeFormat = "yyyy-MMM-dd hh:mm:ss";
     private static DateTime Start = default!;
@@ -35,6 +36,7 @@ public static class AppThreadManager
     }
 
     public static void Execute(bool RunSynchronous = false) {
+        Log($" {version}, (c) 2024 Doud Systems All rights reserved.", showDateTime: false);
         if(RunSynchronous) 
             Log("Running synchronous ..."); 
         else 
@@ -57,8 +59,10 @@ public static class AppThreadManager
         WriteLogMessages();
     }
 
-    public static void Log(string message) {
-        var msg = $"AppThreadMgr: {DateTime.Now.ToString(DateTimeFormat)} {message}";
+    public static void Log(string message, bool showDateTime = true) {
+        var msg = showDateTime
+            ? $"AppThreadMgr: {DateTime.Now.ToString(DateTimeFormat)} {message}"
+            : $"AppThreadMgr {message}";
         Messages.Add(msg);
         Console.WriteLine(msg);
     }
