@@ -1,8 +1,8 @@
 # MultiThreadManager
 
-MultiThreadManager is designed to make it easy for developers to take advantage of the multi-core cpus and have some or all of their methods run *asnchronously* in the background rather than synchronously in the foreground. This takes better advantage of the multi-core CPUs and it allows applications to finish sooner. 
+MultiThreadManager is designed to make it easy for developers to take advantage of the multi-core cpus and have some or all of their methods run *asnchronously* in the background rather than synchronously in the foreground. This takes better advantage of the multi-core CPUs and it allows applications to finish much quicker. 
 
-I created the MultiThreadManager when my son created a program that was designed to validate data sent by other companies so the data could be processed by the sales system. There were about a dozen validations for each row in a text file that could have up to 150,000 rows. All of these validations required checking that a value existed in a database table. Because of the number of possible rows and that there were multiple text files to be processed every day, having each file had to be processed quickly.
+I created the MultiThreadManager project when my son created a process that was designed to validate data sent by other agents so the data could be processed by his company's system. There were about a dozen validations for each row in a text file that could have up to 150,000 rows. All of these validations required checking that a value existed in a database table. Because of the number of possible rows and that there were multiple text files to be processed every day, having each file had to be processed quickly.
 
 ## What methods can run async?
 
@@ -48,6 +48,8 @@ The AppThreadManager class is responsible for executing all the methods to be ru
 Once a class is ready, it should create a instance of itself and that instance should be loaded into the collection using either `Add()` or `AddRange()` within AppThreadManager. When all the instances are loaded, call the `Execute()` method
 
 ```cs
+// the 'n' parameter is the value to calculate the factorial.
+
 // create and load an instance of the user class
 AppThreadManager.Add( new() { TaskName = "FACT1", Priority = 7, n = 6 } );
 
@@ -61,4 +63,4 @@ AppThreadManager.AddRange(
 AppThreadManager.Execute();
 ```
 
-When the methods have been executed, the completed methods are available for review in the `AppThreads` collection. This is important for those methods that return values.
+When the methods have been executed, the completed methods are available for review in the `AppThreads` collection. This is important for those methods that do return values.
